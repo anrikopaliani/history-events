@@ -1,10 +1,11 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 interface FilterProps {
   setSelectedCategory: Dispatch<SetStateAction<string | null>>;
 }
 
 const Filter = ({ setSelectedCategory }: FilterProps) => {
+  const [theme, setTheme] = useState("dark-theme");
   const categories = [
     "Art",
     "Science",
@@ -14,8 +15,20 @@ const Filter = ({ setSelectedCategory }: FilterProps) => {
     "Other",
   ];
 
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
+
+  const changeTheme = () => {
+    if (theme === "light-theme") {
+      setTheme("dark-theme");
+    } else {
+      setTheme("light-theme");
+    }
+  };
+
   return (
-    <div>
+    <div className="filter">
       <div className="filter__select">
         <select onChange={(e) => setSelectedCategory(e.target.value)}>
           <option value="">All</option>
@@ -25,6 +38,21 @@ const Filter = ({ setSelectedCategory }: FilterProps) => {
             </option>
           ))}
         </select>
+      </div>
+
+      <div className="theme-toggler">
+        <input
+          type="checkbox"
+          id="theme-toggler__checkbox"
+          className="theme-toggler__checkbox"
+        />
+        <label
+          htmlFor="theme-toggler__checkbox"
+          className="theme-toggler__label"
+          onClick={changeTheme}
+        >
+          Toggle
+        </label>
       </div>
     </div>
   );
