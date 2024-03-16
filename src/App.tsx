@@ -14,6 +14,7 @@ const fullStar = (
 );
 
 function App() {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [favourites, setFavourites] = useState<number[]>(() => {
     const saved = localStorage.getItem("favourites");
     return saved ? JSON.parse(saved) : [];
@@ -38,9 +39,9 @@ function App() {
   return (
     <>
       <main className="content">
-        <div className="flex flex-col w-4/5 h-full">
+        <div className="flex flex-col gap-6 w-4/5 h-full">
           <div className="h-12">
-            <Filter />
+            <Filter setSelectedCategory={setSelectedCategory} />
           </div>
           <MapContainer
             zoom={13}
@@ -48,14 +49,19 @@ function App() {
             className="map-container"
           >
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></TileLayer>
-            {eventsData.map((event) => (
-              <SingleMarker
-                event={event}
-                favourites={favourites}
-                handleFavouriteClick={handleFavouriteClick}
-                key={event.id}
-              />
-            ))}
+            {eventsData
+              .filter(
+                (event) =>
+                  !selectedCategory || event.category === selectedCategory
+              )
+              .map((event) => (
+                <SingleMarker
+                  event={event}
+                  favourites={favourites}
+                  handleFavouriteClick={handleFavouriteClick}
+                  key={event.id}
+                />
+              ))}
             {activeEvent && (
               <Popup position={activeEvent.position}>
                 <div className="popup-inner">
