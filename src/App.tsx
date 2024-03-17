@@ -39,7 +39,7 @@ function App() {
   return (
     <>
       <main className="content">
-        <div className="flex flex-col gap-6 w-4/5 h-full">
+        <div className="flex flex-col gap-6 h-full map-content">
           <div className="h-12">
             <Filter setSelectedCategory={setSelectedCategory} />
           </div>
