@@ -6,7 +6,7 @@ import SingleMarker from "./components/SingleMarker";
 import FlyToMarker from "./components/FlyToMarker";
 import Filter from "./components/Filter";
 
-const defaultPosition: [number, number] = [51.505, -0.09];
+const defaultPosition: [number, number] = [50, 15];
 
 const emptyStar = <i className="fa-regular fa-star"></i>;
 const fullStar = (
@@ -44,7 +44,7 @@ function App() {
             <Filter setSelectedCategory={setSelectedCategory} />
           </div>
           <MapContainer
-            zoom={13}
+            zoom={2}
             center={defaultPosition}
             className="map-container"
           >
